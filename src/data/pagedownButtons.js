@@ -12,10 +12,6 @@ export default [{
   title: 'Heading',
   icon: 'format-size',
 }, {
-  method: 'strikethrough',
-  title: 'Strikethrough',
-  icon: 'format-strikethrough',
-}, {
 }, {
   method: 'ulist',
   title: 'Unordered list',
@@ -25,18 +21,10 @@ export default [{
   title: 'Ordered list',
   icon: 'format-list-numbers',
 }, {
-  method: 'clist',
-  title: 'Check list',
-  icon: 'format-list-checks',
-}, {
 }, {
   method: 'quote',
   title: 'Blockquote',
   icon: 'format-quote-close',
-}, {
-  method: 'code',
-  title: 'Code',
-  icon: 'code-tags',
 }, {
   method: 'table',
   title: 'Table',
