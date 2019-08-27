@@ -1,24 +1,24 @@
 <template>
   <modal-inner aria-label="Insert image">
     <div class="modal__content">
-      <div class="image_dropzone">
+      <div v-if="url === null" class="image_dropzone">
         <div>Drop your Image here</div>
         <div>- or -</div>
         <div><input type="file" name="fileToUpload" id="fileToUpload" v-on:change="handleFileUpload($event.target.name, $event.target.files)"></div>
       </div>
-      {{ url }}
+      <img v-else v-bind:src="url" />
       <div class="image_modal__input">
         <label>Image Width:</label>
-        <input />
+        <input v-model="width"/>
       </div>
       <div class="image_modal__input">
         <label>Image Caption:</label>
-        <input />
+        <input v-model="caption"/>
       </div>
     </div>
     <div class="modal__button-bar">
       <button class="button" @click="reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve">Ok</button>
+      <button v-bind:disabled="url === null" class="button button--resolve" @click="resolve">Ok</button>
     </div>
   </modal-inner>
 </template>
@@ -58,7 +58,9 @@ export default modalTemplate({
     MenuEntry,
   },
   data: () => ({
-    url: 'url',
+    url: null,
+    width: '',
+    caption: '',
   }),
   methods: {
     resolve(evt) {
@@ -68,7 +70,8 @@ export default modalTemplate({
       } else {
         const { callback } = this.config;
         this.config.resolve();
-        callback(this.url);
+        debugger;
+        callback(this.url, this.width, this.caption);
       }
     },
     reject() {
@@ -80,9 +83,13 @@ export default modalTemplate({
       console.log('origin', origin);
       if (!fileList.length) return;
 
-      window.addEventListener('message', (e) => {
-        console.log('messsssage', e.data);
-      }, false);
+      const messageEventHandler = ({ data: { type, payload } }) => {
+        if (type === 'imageUploaded') {
+          this.url = payload.url;
+        }
+      };
+
+      window.addEventListener('message', messageEventHandler, false);
 
       window.parent.postMessage({
         type: 'imageUpload',

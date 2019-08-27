@@ -734,7 +734,7 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
     var that = this;
     // The function to be executed when you enter a link and press OK or Cancel.
     // Marks up the link and adds the ref.
-    var linkEnteredCallback = function (link) {
+    var linkEnteredCallback = function (link, width = 1200, caption = "") {
 
       if (link !== null) {
         // (                          $1
@@ -764,7 +764,7 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
         */
         chunk.startTag = isImage ? "![" : "[";
         //chunk.endTag = "][" + num + "]";
-        chunk.endTag = "](" + properlyEncoded(link) + ")";
+        chunk.endTag = isImage ? "](" + properlyEncoded(link) + " ="+ width +"x, "+ caption +")" : "](" + properlyEncoded(link) + ")";
 
         if (!chunk.selection) {
           if (isImage) {
@@ -777,7 +777,7 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
       postProcessing();
     };
 
-    if (isImage) {
+    if (isImage) { //here
       this.hooks.insertImageDialog(linkEnteredCallback);
     } else {
       this.hooks.insertLinkDialog(linkEnteredCallback);
