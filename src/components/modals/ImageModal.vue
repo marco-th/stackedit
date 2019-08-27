@@ -68,11 +68,6 @@
 <script>
 import modalTemplate from './common/modalTemplate';
 import MenuEntry from '../menus/common/MenuEntry';
-import utils from '../../services/utils';
-
-const {
-  origin,
-} = utils.queryParams;
 
 export default modalTemplate({
   components: {
@@ -93,7 +88,6 @@ export default modalTemplate({
       } else {
         const { callback } = this.config;
         this.config.resolve();
-        debugger;
         callback(this.url, this.width, this.caption, this.alignment, this.imageAlt);
       }
     },
@@ -103,7 +97,6 @@ export default modalTemplate({
       callback(null);
     },
     handleFileUpload(fieldName, fileList) {
-      console.log('origin', origin);
       if (!fileList.length) return;
 
       const messageEventHandler = ({ data: { type, payload } }) => {
