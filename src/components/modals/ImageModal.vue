@@ -2,9 +2,9 @@
   <modal-inner aria-label="Insert image">
     <div class="modal__content">
       <div v-if="url === null" class="image_dropzone">
-        <div>Drop your Image here</div>
-        <div>- or -</div>
-        <div><input type="file" name="fileToUpload" id="fileToUpload" v-on:change="handleFileUpload($event.target.name, $event.target.files)"></div>
+        <div class="image_modal__input">
+          <label>Image:</label>
+          <input type="file" name="fileToUpload" id="fileToUpload" v-on:change="handleFileUpload($event.target.name, $event.target.files)"></div>
       </div>
       <img v-else v-bind:src="url" />
       <div class="image_modal__input">
@@ -36,17 +36,6 @@
 </template>
 
 <style lang="scss">
-  .image_dropzone {
-    height: 400px;
-    width: 100%;
-    border: 2px dashed black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    flex-direction: column;
-  }
-
   .image_modal__input {
     margin-top: 15px;
 
@@ -113,7 +102,7 @@ export default modalTemplate({
           image: fileList[0],
           origin: window.origin,
         },
-      }, 'http://localhost:8080');
+      }, '*');
     },
   },
 });

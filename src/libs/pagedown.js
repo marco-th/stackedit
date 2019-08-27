@@ -762,9 +762,6 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
 
         var num = that.addLinkDef(chunk, linkDef);
         */
-        // chunk.startTag = isImage ? "![" : "[";
-        //chunk.endTag = "][" + num + "]";
-        // chunk.endTag = isImage ? "](" + properlyEncoded(link) + " ="+ width +"x, "+ caption +")" : "](" + properlyEncoded(link) + ")";
 
         if(isImage){
           chunk.startTag = `<Image width={${width}} caption="${caption}" href="" alignment="${alignment}">\n\n![`
