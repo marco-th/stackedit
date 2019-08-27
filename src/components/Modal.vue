@@ -234,7 +234,7 @@ export default {
   margin: 0 auto;
   width: 100%;
   min-width: 320px;
-  max-width: 480px;
+  max-width: 700px;
 }
 
 .modal__inner-2 {

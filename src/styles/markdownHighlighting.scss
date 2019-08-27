@@ -145,10 +145,21 @@
       background-color: transparent;
     }
 
+    .token.img {
+      font-size: 12px;
+
+      span {
+        font-size: 9px;
+      }
+    }
+
     img {
       max-width: 100%;
       padding: 0 0.15em;
       box-sizing: content-box;
+      max-height: 130px;
+      margin-bottom: -10px;
+      width: auto;
     }
   }
 

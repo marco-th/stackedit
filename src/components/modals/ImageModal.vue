@@ -9,11 +9,23 @@
       <img v-else v-bind:src="url" />
       <div class="image_modal__input">
         <label>Image Width:</label>
-        <input v-model="width"/>
+        <input v-model="width" type="number"/>
       </div>
       <div class="image_modal__input">
         <label>Image Caption:</label>
-        <input v-model="caption"/>
+        <input v-model="caption" placeholder="Caption displayed under the image"/>
+      </div>
+      <div class="image_modal__input">
+        <label>Alignment:</label>
+        <select v-model="alignment">
+          <option value="left">Left</option>
+          <option value="center">Center</option>
+          <option value="right">Right</option>
+        </select>
+      </div>
+      <div class="image_modal__input">
+        <label>Image Alt:</label>
+        <input v-model="imageAlt" placeholder="Alternate text for the image, if the image cannot be displayed"/>
       </div>
     </div>
     <div class="modal__button-bar">
@@ -41,6 +53,15 @@
     label {
       width: 250px;
     }
+
+    input {
+      width: 100%;
+      border-radius: 4px;
+    }
+
+    select {
+      width: 100%;
+    }
   }
 </style>
 
@@ -59,8 +80,10 @@ export default modalTemplate({
   },
   data: () => ({
     url: null,
-    width: '',
+    width: 1200,
     caption: '',
+    alignment: 'center',
+    imageAlt: '',
   }),
   methods: {
     resolve(evt) {
@@ -71,7 +94,7 @@ export default modalTemplate({
         const { callback } = this.config;
         this.config.resolve();
         debugger;
-        callback(this.url, this.width, this.caption);
+        callback(this.url, this.width, this.caption, this.alignment, this.imageAlt);
       }
     },
     reject() {

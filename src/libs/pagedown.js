@@ -734,7 +734,7 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
     var that = this;
     // The function to be executed when you enter a link and press OK or Cancel.
     // Marks up the link and adds the ref.
-    var linkEnteredCallback = function (link, width = 1200, caption = "") {
+    var linkEnteredCallback = function (link, width = 1200, caption = "", alignment = "center", imageAlt = "") {
 
       if (link !== null) {
         // (                          $1
@@ -762,13 +762,21 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
 
         var num = that.addLinkDef(chunk, linkDef);
         */
-        chunk.startTag = isImage ? "![" : "[";
+        // chunk.startTag = isImage ? "![" : "[";
         //chunk.endTag = "][" + num + "]";
-        chunk.endTag = isImage ? "](" + properlyEncoded(link) + " ="+ width +"x, "+ caption +")" : "](" + properlyEncoded(link) + ")";
+        // chunk.endTag = isImage ? "](" + properlyEncoded(link) + " ="+ width +"x, "+ caption +")" : "](" + properlyEncoded(link) + ")";
+
+        if(isImage){
+          chunk.startTag = `<Image width={${width}} caption="${caption}" href="" alignment="${alignment}">\n\n![`
+          chunk.endTag = `](${properlyEncoded(link)})\n\n</Image>`;
+        } else {
+          chunk.startTag = "[";
+          chunk.endTag = "](" + properlyEncoded(link) + ")";
+        }
 
         if (!chunk.selection) {
           if (isImage) {
-            chunk.selection = that.getString("imagedescription");
+            chunk.selection = imageAlt;
           } else {
             chunk.selection = that.getString("linkdescription");
           }
