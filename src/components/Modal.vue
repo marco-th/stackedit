@@ -234,13 +234,13 @@ export default {
   margin: 0 auto;
   width: 100%;
   min-width: 320px;
-  max-width: 700px;
+  max-width: 100%;
 }
 
 .modal__inner-2 {
   margin: 40px 10px 100px;
   background-color: #f8f8f8;
-  padding: 50px 50px 40px;
+  padding: 50px 15px 40px;
   border-radius: $border-radius-base;
   position: relative;
   overflow: hidden;

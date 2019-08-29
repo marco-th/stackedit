@@ -35,6 +35,7 @@ shortcuts:
   mod+shift+q: quote
   mod+shift+s: strikethrough
   mod+shift+t: table
+  mod+shift+1: h1
   mod+shift+u: ulist
   '= = > space':
     method: expand

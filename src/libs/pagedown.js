@@ -30,6 +30,7 @@ var defaultsStrings = {
 
   olist: "Numbered List <ol> Ctrl/Cmd+O",
   ulist: "Bulleted List <ul> Ctrl/Cmd+U",
+  h1: "Heading1 <ul> Ctrl/Cmd+1",
   litem: "List item",
 
   heading: "Heading <h1>/<h2> Ctrl/Cmd+H",
@@ -462,6 +463,7 @@ function UIManager(input, commandManager) {
 
     buttons.bold = bindCommand("doBold");
     buttons.italic = bindCommand("doItalic");
+    buttons.h1 = bindCommand("doH1");
     buttons.strikethrough = bindCommand("doStrikethrough");
     buttons.link = bindCommand(function (chunk, postProcessing) {
       return this.doLinkOrImage(chunk, postProcessing, false);
@@ -524,9 +526,14 @@ commandProto.doBold = function (chunk, postProcessing) {
   return this.doBorI(chunk, postProcessing, 2, this.getString("boldexample"));
 };
 
+commandProto.doH1 = function (chunk, postProcessing) {
+  return this.doUnderline(chunk, postProcessing, 2, this.getString("h1"));
+};
+
 commandProto.doItalic = function (chunk, postProcessing) {
   return this.doBorI(chunk, postProcessing, 1, this.getString("italicexample"));
 };
+
 
 // chunk: The selected region that will be enclosed with */**
 // nStars: 1 for italics, 2 for bold
@@ -570,6 +577,27 @@ commandProto.doBorI = function (chunk, postProcessing, nStars, insertText) {
   }
 
   return;
+};
+
+commandProto.doUnderline = function (chunk, postProcessing) {
+
+  // Get rid of whitespace and fixup newlines.
+  chunk.trimWhitespace();
+  chunk.selection = chunk.selection.replace(/\n{2,}/g, "\n");
+
+  // Look for stars before and after.  Is the chunk already marked up?
+  // note that these regex matches cannot fail
+  var starsBefore = /(~*$)/.exec(chunk.before)[0];
+  var starsAfter = /(^~*)/.exec(chunk.after)[0];
+
+  var prevStars = Math.min(starsBefore.length, starsAfter.length);
+
+  var nStars = 2;
+
+  chunk.before = chunk.before + "<u>";
+  chunk.after = "</u>" + chunk.after;
+
+  return
 };
 
 commandProto.doStrikethrough = function (chunk, postProcessing) {
@@ -1354,7 +1382,8 @@ commandProto.doHeading = function (chunk) {
   // We make a level 2 header if there is no current header.
   // If there is a header level, we substract one from the header level.
   // If it's already a level 1 header, it's removed.
-  var headerLevelToCreate = headerLevel === 0 ? 2 : headerLevel - 1;
+  const maxHeaderLevel = 4;
+  var headerLevelToCreate = headerLevel === 0 ? 1 : headerLevel === maxHeaderLevel ? 1 : headerLevel + 1;
 
   if (headerLevelToCreate > 0) {
 

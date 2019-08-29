@@ -8,6 +8,10 @@ export default [{
   title: 'Italic',
   icon: 'format-italic',
 }, {
+  method: 'h1',
+  title: 'H1',
+  icon: 'heading-one',
+}, {
   method: 'heading',
   title: 'Heading',
   icon: 'format-size',

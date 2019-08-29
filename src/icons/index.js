@@ -54,6 +54,8 @@ import ContentCopy from './ContentCopy';
 import Key from './Key';
 import DotsHorizontal from './DotsHorizontal';
 import Seal from './Seal';
+import Heading1 from './Heading1';
+
 
 Vue.component('iconProvider', Provider);
 Vue.component('iconFormatBold', FormatBold);
@@ -110,3 +112,4 @@ Vue.component('iconContentCopy', ContentCopy);
 Vue.component('iconKey', Key);
 Vue.component('iconDotsHorizontal', DotsHorizontal);
 Vue.component('iconSeal', Seal);
+Vue.component('iconHeadingOne', Heading1);

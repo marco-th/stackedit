@@ -1,12 +1,23 @@
 <template>
   <modal-inner aria-label="Insert image">
     <div class="modal__content">
-      <div v-if="url === null" class="image_dropzone">
-        <div class="image_modal__input">
-          <label>Image:</label>
-          <input type="file" name="fileToUpload" id="fileToUpload" v-on:change="handleFileUpload($event.target.name, $event.target.files)"></div>
+      <div class="selected_image" v-if="url !== null">
+        Selected Image:
+        <img v-bind:src="url" />
       </div>
-      <img v-else v-bind:src="url" />
+      <div class="image_dropzone">
+        <div class="image_modal__input">
+          <label>Upload an Image:</label>
+          <input type="file" name="fileToUpload" id="fileToUpload" v-on:change="handleFileUpload($event.target.name, $event.target.files)"></div>
+          <div style="font-weight: bold;">or</div>
+          <div v-on:click="handleClickEnableImageSelect">Select an image</div>
+          <div v-if="isImageSelectionActive" class="image_select">
+            <div v-for="image in images" v-bind:key="image.title" v-on:click="() => handleClickImage(image.url)" v-bind:class="{ active: image.url === url }">
+              <img v-bind:src="image.url + '?w=200'" />
+              <div class="title">{{ image.title }}</div>
+            </div>
+          </div>
+      </div>
       <div class="image_modal__input">
         <label>Image Width:</label>
         <input v-model="width" type="number"/>
@@ -52,6 +63,33 @@
       width: 100%;
     }
   }
+
+  .image_select {
+    height: 400px;
+    width: 100%;
+    border: 1px solid #fdfdfd;
+    background: white;
+    border-radius: 2px;
+    display: grid;
+    overflow-y: scroll;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+
+    .image_element {
+      border: 1px solid black;
+
+      .title {
+        font-size: 11px;
+        color: black;
+        padding: 15px;
+      }
+    }
+  }
+
+  .selected_image {
+    max-width: 250px;
+    margin: 0 auto;
+  }
 </style>
 
 <script>
@@ -68,7 +106,18 @@ export default modalTemplate({
     caption: '',
     alignment: 'center',
     imageAlt: '',
+    images: [],
+    isImageSelectionActive: false,
   }),
+  created() {
+    window.addEventListener('message', ({ data: { type, payload } }) => {
+      if (type === 'responseImages') {
+        this.images = payload.images;
+      }
+    }, false);
+
+    window.parent.postMessage({ type: 'requestImages', payload: {} }, '*');
+  },
   methods: {
     resolve(evt) {
       evt.preventDefault(); // Fixes https://github.com/benweet/stackedit/issues/1503
@@ -84,6 +133,13 @@ export default modalTemplate({
       const { callback } = this.config;
       this.config.reject();
       callback(null);
+    },
+    handleClickEnableImageSelect() {
+      this.isImageSelectionActive = !this.isImageSelectionActive;
+    },
+    handleClickImage(imageUrl) {
+      this.url = imageUrl;
+      this.isImageSelectionActive = false;
     },
     handleFileUpload(fieldName, fileList) {
       if (!fileList.length) return;

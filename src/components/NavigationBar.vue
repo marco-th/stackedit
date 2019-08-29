@@ -1,5 +1,6 @@
 <template>
   <nav class="navigation-bar" :class="{'navigation-bar--editor': styles.showEditor && !revisionContent, 'navigation-bar--light': light}">
+    <!-- Side bar -->
     <div class="navigation-bar__inner navigation-bar__inner--edit-pagedownButtons">
       <button class="navigation-bar__button button" @click="undo" v-title="'Undo'" :disabled="!canUndo"><icon-undo></icon-undo></button>
       <button class="navigation-bar__button button" @click="redo" v-title="'Redo'" :disabled="!canRedo"><icon-redo></icon-redo></button>
@@ -27,7 +28,7 @@ import workspaceSvc from '../services/workspaceSvc';
 import badgeSvc from '../services/badgeSvc';
 
 // According to mousetrap
-const mod = /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? 'Meta' : 'Ctrl';
+const mod = /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? 'Command' : 'Ctrl';
 
 const getShortcut = (method) => {
   let result = '';
