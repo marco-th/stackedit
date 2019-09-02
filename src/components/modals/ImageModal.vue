@@ -10,7 +10,7 @@
           <label>Upload an Image:</label>
           <input type="file" name="fileToUpload" id="fileToUpload" v-on:change="handleFileUpload($event.target.name, $event.target.files)"></div>
           <div style="font-weight: bold;">or</div>
-          <div v-on:click="handleClickEnableImageSelect">Select an image</div>
+          <div class="image_modal_selecet" v-on:click="handleClickEnableImageSelect">Select an image</div>
           <div v-if="isImageSelectionActive" class="image_select">
             <div v-for="image in images" v-bind:key="image.title" v-on:click="() => handleClickImage(image.url)" v-bind:class="{ active: image.url === url }">
               <img v-bind:src="image.url + '?w=200'" />
@@ -61,6 +61,18 @@
 
     select {
       width: 100%;
+    }
+  }
+
+  .image_modal_selecet {
+    color: #fb6222;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover {
+      font-weight: 700;
+      text-decoration: underline;
     }
   }
 

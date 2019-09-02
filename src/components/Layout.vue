@@ -9,10 +9,10 @@
           <navigation-bar></navigation-bar>
         </div>
         <div class="layout__panel flex flex--row" :style="{height: styles.innerHeight + 'px'}">
-          <div class="layout__panel layout__panel--editor" v-show="styles.showEditor" :style="{width: (styles.editorWidth + styles.editorGutterWidth + constants.buttonBarWidth) + 'px', fontSize: styles.fontSize + 'px'}">
+          <div class="layout__panel layout__panel--editor" v-show="styles.showEditor" :style="{width: '100%', fontSize: styles.fontSize + 'px'}">
             <editor></editor>
           </div>
-          <div class="layout__panel layout__panel--preview" v-show="false" :style="{width: (styles.previewWidth + styles.previewGutterWidth) + 'px', fontSize: styles.fontSize + 'px'}">
+          <div class="layout__panel layout__panel--preview" v-show="false" :style="{width: 0, fontSize: styles.fontSize + 'px'}">
             <div class="gutter" :style="{left: styles.previewGutterLeft + 'px'}">
               <div class="gutter__background" v-if="styles.previewGutterWidth" :style="{width: styles.previewGutterWidth + 'px'}"></div>
             </div>
