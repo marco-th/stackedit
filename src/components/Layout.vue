@@ -12,6 +12,16 @@
           <div class="layout__panel layout__panel--editor" v-show="styles.showEditor" :style="{width: (styles.editorWidth + styles.editorGutterWidth + constants.buttonBarWidth) + 'px', fontSize: styles.fontSize + 'px'}">
             <editor></editor>
           </div>
+          <div class="layout__panel layout__panel--preview" v-show="false" :style="{width: (styles.previewWidth + styles.previewGutterWidth) + 'px', fontSize: styles.fontSize + 'px'}">
+            <div class="gutter" :style="{left: styles.previewGutterLeft + 'px'}">
+              <div class="gutter__background" v-if="styles.previewGutterWidth" :style="{width: styles.previewGutterWidth + 'px'}"></div>
+            </div>
+            <preview></preview>
+            <div class="gutter" :style="{left: styles.previewGutterLeft + 'px'}">
+              <sticky-comment v-if="styles.previewGutterWidth && stickyComment === 'top'"></sticky-comment>
+              <current-discussion v-if="styles.previewGutterWidth"></current-discussion>
+            </div>
+          </div>
           <div class="layout__panel layout__panel--find-replace" v-if="showFindReplace">
             <find-replace></find-replace>
           </div>
