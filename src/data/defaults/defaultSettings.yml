@@ -28,6 +28,7 @@ shortcuts:
   mod+shift+7: olist
   mod+shift+9: table
   mod+shift+0: quote
+  mod+y: youtube
 
   mod+s: sync
   mod+f: find

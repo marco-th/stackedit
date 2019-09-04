@@ -126,6 +126,8 @@ function Pagedown(options) {
    * image url (or null if the user cancelled). If this hook returns false, the default dialog will be used.
    */
   hooks.addFalse("insertLinkDialog");
+  hooks.addFalse("inserYouTubeDialog");
+
 
   var that = this,
     input;
@@ -485,6 +487,9 @@ function UIManager(input, commandManager) {
     buttons.heading = bindCommand("doHeading");
     buttons.hr = bindCommand("doHorizontalRule");
     buttons.table = bindCommand("doTable");
+    buttons.youtube = bindCommand(function (chunk, postProcessing) {
+      return this.doLinkOrImage(chunk, postProcessing, false, true);
+    });
   }
 
   this.doClick = doClick;
@@ -735,7 +740,7 @@ function properlyEncoded(linkdef) {
   });
 }
 
-commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
+commandProto.doLinkOrImage = function (chunk, postProcessing, isImage, isYoutubeLink) {
 
   chunk.trimWhitespace();
   //chunk.findTags(/\s*!?\[/, /\][ ]?(?:\n[ ]*)?(\[.*?\])?/);
@@ -790,10 +795,12 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
 
         var num = that.addLinkDef(chunk, linkDef);
         */
-
         if(isImage){
           chunk.startTag = `<Image width={${width}} caption="${caption}" href="" alignment="${alignment}">\n\n![`
           chunk.endTag = `](${properlyEncoded(link)})\n\n</Image>`;
+        } else if (isYoutubeLink) {
+          chunk.startTag = `<Youtube id={"${link}"} />`;
+          chunk.endTag = `\n\n`;
         } else {
           chunk.startTag = "[";
           chunk.endTag = "](" + properlyEncoded(link) + ")";
@@ -802,6 +809,8 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
         if (!chunk.selection) {
           if (isImage) {
             chunk.selection = imageAlt;
+          } else if (isYoutubeLink) {
+            chunk.selection = "";
           } else {
             chunk.selection = that.getString("linkdescription");
           }
@@ -810,8 +819,10 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
       postProcessing();
     };
 
-    if (isImage) { //here
+    if (isImage) {
       this.hooks.insertImageDialog(linkEnteredCallback);
+    } else if(isYoutubeLink) {
+      this.hooks.inserYouTubeDialog(linkEnteredCallback);
     } else {
       this.hooks.insertLinkDialog(linkEnteredCallback);
     }

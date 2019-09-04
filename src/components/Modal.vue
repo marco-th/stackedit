@@ -32,6 +32,8 @@ import HtmlExportModal from './modals/HtmlExportModal';
 import PdfExportModal from './modals/PdfExportModal';
 import PandocExportModal from './modals/PandocExportModal';
 import LinkModal from './modals/LinkModal';
+import YoutubeModal from './modals/YoutubeModal';
+
 import ImageModal from './modals/ImageModal';
 import SyncManagementModal from './modals/SyncManagementModal';
 import PublishManagementModal from './modals/PublishManagementModal';
@@ -84,6 +86,7 @@ export default {
     PdfExportModal,
     PandocExportModal,
     LinkModal,
+    YoutubeModal,
     ImageModal,
     SyncManagementModal,
     PublishManagementModal,

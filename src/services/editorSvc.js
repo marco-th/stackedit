@@ -376,6 +376,13 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
       });
       return true;
     });
+    this.pagedownEditor.hooks.set('inserYouTubeDialog', (callback) => {
+      store.dispatch('modal/open', {
+        type: 'youtube',
+        callback,
+      });
+      return true;
+    });
     this.pagedownEditor.hooks.set('insertImageDialog', (callback) => {
       store.dispatch('modal/open', {
         type: 'image',

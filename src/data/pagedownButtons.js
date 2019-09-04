@@ -41,4 +41,9 @@ export default [{
   method: 'image',
   title: 'Image',
   icon: 'file-image',
+},
+{
+  method: 'youtube',
+  title: 'Youtube',
+  icon: 'youtube',
 }];

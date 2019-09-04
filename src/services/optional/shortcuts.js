@@ -30,6 +30,7 @@ const methods = {
   image: pagedownHandler('image'),
   olist: pagedownHandler('olist'),
   underline: pagedownHandler('underline'),
+  youtube: pagedownHandler('youtube'),
   ulist: pagedownHandler('ulist'),
   clist: pagedownHandler('clist'),
   heading: pagedownHandler('heading'),
