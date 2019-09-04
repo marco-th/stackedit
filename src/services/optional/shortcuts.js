@@ -29,6 +29,7 @@ const methods = {
   code: pagedownHandler('code'),
   image: pagedownHandler('image'),
   olist: pagedownHandler('olist'),
+  underline: pagedownHandler('underline'),
   ulist: pagedownHandler('ulist'),
   clist: pagedownHandler('clist'),
   heading: pagedownHandler('heading'),

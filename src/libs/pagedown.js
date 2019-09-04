@@ -24,13 +24,13 @@ var defaultsStrings = {
   code: "Code Sample <pre><code> Ctrl/Cmd+K",
   codeexample: "enter code here",
 
-  image: "Image <img> Ctrl/Cmd+G",
+  image: "Image \> Ctrl/Cmd+G",
   imagedescription: "enter image description here",
   imagedialog: "<p><b>Insert Image</b></p><p>http://example.com/images/diagram.jpg \"optional title\"<br><br>Need <a href='http://www.google.com/search?q=free+image+hosting' target='_blank'>free image hosting?</a></p>",
 
   olist: "Numbered List <ol> Ctrl/Cmd+O",
   ulist: "Bulleted List <ul> Ctrl/Cmd+U",
-  h1: "Heading1 <ul> Ctrl/Cmd+1",
+  underline: "Underline <ul> Ctrl/Cmd+U",
   litem: "List item",
 
   heading: "Heading <h1>/<h2> Ctrl/Cmd+H",
@@ -463,7 +463,7 @@ function UIManager(input, commandManager) {
 
     buttons.bold = bindCommand("doBold");
     buttons.italic = bindCommand("doItalic");
-    buttons.h1 = bindCommand("doH1");
+    buttons.underline = bindCommand("doUnderline");
     buttons.strikethrough = bindCommand("doStrikethrough");
     buttons.link = bindCommand(function (chunk, postProcessing) {
       return this.doLinkOrImage(chunk, postProcessing, false);
@@ -526,8 +526,8 @@ commandProto.doBold = function (chunk, postProcessing) {
   return this.doBorI(chunk, postProcessing, 2, this.getString("boldexample"));
 };
 
-commandProto.doH1 = function (chunk, postProcessing) {
-  return this.doUnderline(chunk, postProcessing, 2, this.getString("h1"));
+commandProto.doUnderline = function (chunk, postProcessing) {
+  return this.doUnderline(chunk, postProcessing, 2, this.getString("underline"));
 };
 
 commandProto.doItalic = function (chunk, postProcessing) {
