@@ -56,6 +56,7 @@ import DotsHorizontal from './DotsHorizontal';
 import Seal from './Seal';
 import Heading1 from './Heading1';
 import Youtube from './Youtube';
+import Indent from './Indent';
 
 Vue.component('iconProvider', Provider);
 Vue.component('iconFormatBold', FormatBold);
@@ -114,3 +115,4 @@ Vue.component('iconDotsHorizontal', DotsHorizontal);
 Vue.component('iconSeal', Seal);
 Vue.component('iconHeadingOne', Heading1);
 Vue.component('iconYoutube', Youtube);
+Vue.component('iconIndent', Indent);

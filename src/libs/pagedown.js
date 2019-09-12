@@ -471,6 +471,8 @@ function UIManager(input, commandManager) {
       return this.doLinkOrImage(chunk, postProcessing, false);
     });
     buttons.quote = bindCommand("doBlockquote");
+    buttons.indent = bindCommand("doIndent");
+
     buttons.code = bindCommand("doCode");
     buttons.image = bindCommand(function (chunk, postProcessing) {
       return this.doLinkOrImage(chunk, postProcessing, true);
@@ -878,6 +880,11 @@ commandProto.doAutoindent = function (chunk) {
 commandProto.doBlockquote = function (chunk) {
   chunk.startTag = "<blockquote>\n\n"
   chunk.endTag = "\n\n</blockquote>"
+};
+
+commandProto.doIndent = function (chunk) {
+  chunk.startTag = "<Indent left={30}>\n\n"
+  chunk.endTag = "\n\n</Indent>"
 };
 
 commandProto.doCode = function (chunk) {
